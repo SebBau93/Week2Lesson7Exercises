@@ -33,6 +33,13 @@ namespace Week2Lesson7Exercises
             Console.WriteLine(Environment.NewLine);
 
             #endregion
+
+            #region Exercise 5
+
+            Exercise5();
+            Console.WriteLine(Environment.NewLine);
+
+            #endregion
         }
 
         private static void Exercise1()
@@ -118,6 +125,32 @@ namespace Week2Lesson7Exercises
                 }
                 else
                     Console.WriteLine("Invalid year");
+            }
+        }
+
+        private static void Exercise5()
+        {
+            Console.WriteLine("Exercise 5");
+
+            while (true)
+            {
+                Console.WriteLine("Enter your age:");
+
+                bool isByte = byte.TryParse(Console.ReadLine(), out byte age);
+
+                if (isByte)
+                {
+                    if (age >= 35)
+                        Console.WriteLine("You can be a deputy, senator or president.");
+                    else if (age >= 30 && age < 35 )
+                        Console.WriteLine("You can be a deputy or senator.");
+                    else if (age < 30 && age >= 21)
+                        Console.WriteLine("You can be a deputy.");
+                    else
+                        Console.WriteLine("You cannot apply for any position.");
+                }
+                else
+                    Console.WriteLine("Invalid age");
             }
         }
     }
