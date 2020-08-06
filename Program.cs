@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
@@ -220,22 +221,22 @@ namespace Week2Lesson7Exercises
 
             while (true)
             {
-                Console.WriteLine("Enter your increase:");
+                Console.WriteLine("Enter your height:");
 
-                bool isUshort = ushort.TryParse(Console.ReadLine(), out ushort increase);
+                bool isUshort = ushort.TryParse(Console.ReadLine(), out ushort height);
 
                 if (isUshort)
                 {
-                    if (increase >= 200)
+                    if (height >= 200)
                         Console.WriteLine("You're a MONSTER!");
-                    else if (increase < 200 && increase > 180)
+                    else if (height < 200 && height > 180)
                         Console.WriteLine("Not bad...");
                     else
                         Console.WriteLine("You're a dwarf.");
                     return;
                 }
                 else
-                    Console.WriteLine("Invalid increase");
+                    Console.WriteLine("Invalid height");
             }
         }
 
@@ -247,28 +248,14 @@ namespace Week2Lesson7Exercises
 
             while (true)
             {
-                maxValueArray[0] = AddNumber("first");
-                maxValueArray[1] = AddNumber("second");
-                maxValueArray[2] = AddNumber("third");
+                maxValueArray[0] = AddIntValue("Enter a first value:");
+                maxValueArray[1] = AddIntValue("Enter a second value:");
+                maxValueArray[2] = AddIntValue("Enter a third value:");
                 Console.WriteLine($"Max value for the given numbers is {maxValueArray.Max()}");
                 return;
             };
-
-            static int AddNumber(string nextNumber)
-            {
-                while (true)
-                {
-                    Console.WriteLine($"Enter a {nextNumber} number:");
-
-                    bool isInt = Int32.TryParse(Console.ReadLine(), out int number);
-
-                    if (isInt)
-                        return number;
-
-                    Console.WriteLine("Invalid number");
-                }
-            }
         }
+
         private static void Exercise8()
         {
             Console.WriteLine("Exercise 8");
@@ -289,21 +276,6 @@ namespace Week2Lesson7Exercises
                     Console.WriteLine("Candidate not admitted to recruitment.");
                 return;
             };
-
-            static int AddSchoolSubjectScore(string schoolSubjectName)
-            {
-                while (true)
-                {
-                    Console.WriteLine($"Enter a {schoolSubjectName} score:");
-
-                    bool isInt = Int32.TryParse(Console.ReadLine(), out int score);
-
-                    if (isInt && score >= 0)
-                        return score;
-
-                    Console.WriteLine("Invalid score");
-                }
-            }
         }
 
         private static void Exercise9()
@@ -341,16 +313,19 @@ namespace Week2Lesson7Exercises
         {
             Console.WriteLine("Exercise 10");
 
-            int[] triangleSides = new int[3];
+            List<int> triangleSides = new List<int> { };
 
             while (true)
             {
-                triangleSides[0] = AddTriangleSideValue("first");
-                triangleSides[1] = AddTriangleSideValue("second");
-                triangleSides[2] = AddTriangleSideValue("third");
+                triangleSides.Add(AddIntValue("Enter a first side length:"));
+                triangleSides.Add(AddIntValue("Enter a second side length:"));
+                triangleSides.Add(AddIntValue("Enter a third side length:"));
 
                 int maxValue = triangleSides.Max();
-                int sumShorterSidesValue = triangleSides.Where(val => val != maxValue).Sum();
+                int maxValueIndex = triangleSides.IndexOf(maxValue);
+                triangleSides.RemoveAt(maxValueIndex);
+
+                int sumShorterSidesValue = triangleSides.Sum();
 
                 if (sumShorterSidesValue > maxValue)
                     Console.WriteLine("You can build a triangle form the given sides.");
@@ -359,21 +334,6 @@ namespace Week2Lesson7Exercises
 
                 return;
             };
-
-            static int AddTriangleSideValue(string sideName)
-            {
-                while (true)
-                {
-                    Console.WriteLine($"Enter a {sideName} value:");
-
-                    bool isInt = Int32.TryParse(Console.ReadLine(), out int value);
-
-                    if (isInt && value > 0)
-                        return value;
-
-                    Console.WriteLine("Invalid value");
-                }
-            }
         }
 
         private static void Exercise11()
@@ -483,7 +443,7 @@ namespace Week2Lesson7Exercises
                     switch (appAction)
                     {
                         case 1:
-                            AppBody();
+                            CalculatorAppBody();
                             break;
                         case 2:
                             Console.WriteLine("Closing the application...");
@@ -497,71 +457,88 @@ namespace Week2Lesson7Exercises
                     }
                 }
             };
+        }
 
-            static int AddNumber(string nextNumber)
+        // Other methods
+
+        private static void CalculatorAppBody()
+        {
+            int firstNumber = AddIntValue("Enter a first number:");
+            int secondNumber = AddIntValue("Enter a second number:");
+            int result;
+
+            Console.WriteLine("Set operation:");
+            Console.WriteLine("1 - Addition");
+            Console.WriteLine("2 - Subtraction");
+            Console.WriteLine("3 - Multiplication");
+            Console.WriteLine("4 - Division");
+            Console.WriteLine(Environment.NewLine);
+
+            bool isByte = byte.TryParse(Console.ReadLine(), out byte operation);
+
+            if (isByte)
             {
-                while (true)
+                switch (operation)
                 {
-                    Console.WriteLine($"Enter a {nextNumber} number:");
-
-                    bool isInt = Int32.TryParse(Console.ReadLine(), out int number);
-
-                    if (isInt)
-                        return number;
-
-                    Console.WriteLine("Invalid number");
-                    Console.WriteLine(Environment.NewLine);
+                    case 1:
+                        result = firstNumber + secondNumber;
+                        Console.WriteLine($"Result for addition: {result}");
+                        Console.WriteLine(Environment.NewLine);
+                        return;
+                    case 2:
+                        result = firstNumber - secondNumber;
+                        Console.WriteLine($"Result for subtraction: {result}");
+                        Console.WriteLine(Environment.NewLine);
+                        return;
+                    case 3:
+                        result = firstNumber * secondNumber;
+                        Console.WriteLine($"Result for multiplication: {result}");
+                        Console.WriteLine(Environment.NewLine);
+                        return;
+                    case 4:
+                        result = firstNumber / secondNumber;
+                        Console.WriteLine($"Result for division: {result}");
+                        Console.WriteLine(Environment.NewLine);
+                        return;
+                    default:
+                        Console.WriteLine("Invalid operation.");
+                        Console.WriteLine(Environment.NewLine);
+                        return;
                 }
             }
 
-            static void AppBody()
+            Console.WriteLine("Invalid operation value.");
+            Console.WriteLine(Environment.NewLine);
+        }
+
+        private static int AddIntValue(string message)
+        {
+            while (true)
             {
-                int firstNumber = AddNumber("first");
-                int secondNumber = AddNumber("second");
-                int result;
+                Console.WriteLine(message);
 
-                Console.WriteLine("Set operation:");
-                Console.WriteLine("1 - Addition");
-                Console.WriteLine("2 - Subtraction");
-                Console.WriteLine("3 - Multiplication");
-                Console.WriteLine("4 - Division");
+                bool isInt = Int32.TryParse(Console.ReadLine(), out int number);
+
+                if (isInt)
+                    return number;
+
+                Console.WriteLine("Invalid number");
                 Console.WriteLine(Environment.NewLine);
+            }
+        }
 
-                bool isByte = byte.TryParse(Console.ReadLine(), out byte operation);
+        private static int AddSchoolSubjectScore(string schoolSubjectName)
+        {
+            while (true)
+            {
+                Console.WriteLine($"Enter a {schoolSubjectName} score:");
 
-                if (isByte)
-                {
-                    switch (operation)
-                    {
-                        case 1:
-                            result = firstNumber + secondNumber;
-                            Console.WriteLine($"Result for addition: {result}");
-                            Console.WriteLine(Environment.NewLine);
-                            return;
-                        case 2:
-                            result = firstNumber - secondNumber;
-                            Console.WriteLine($"Result for subtraction: {result}");
-                            Console.WriteLine(Environment.NewLine);
-                            return;
-                        case 3:
-                            result = firstNumber * secondNumber;
-                            Console.WriteLine($"Result for multiplication: {result}");
-                            Console.WriteLine(Environment.NewLine);
-                            return;
-                        case 4:
-                            result = firstNumber / secondNumber;
-                            Console.WriteLine($"Result for division: {result}");
-                            Console.WriteLine(Environment.NewLine);
-                            return;
-                        default:
-                            Console.WriteLine("Invalid operation.");
-                            Console.WriteLine(Environment.NewLine);
-                            return;
-                    }
-                }
+                bool isInt = Int32.TryParse(Console.ReadLine(), out int score);
 
-                Console.WriteLine("Invalid operation value.");
-                Console.WriteLine(Environment.NewLine);
+                if (isInt && score >= 0)
+                    return score;
+
+                Console.WriteLine("Invalid score");
             }
         }
     }
