@@ -40,6 +40,13 @@ namespace Week2Lesson7Exercises
             Console.WriteLine(Environment.NewLine);
 
             #endregion
+
+            #region Exercise 6
+
+            Exercise6();
+            Console.WriteLine(Environment.NewLine);
+
+            #endregion
         }
 
         private static void Exercise1()
@@ -151,6 +158,30 @@ namespace Week2Lesson7Exercises
                 }
                 else
                     Console.WriteLine("Invalid age");
+            }
+        }
+
+        private static void Exercise6()
+        {
+            Console.WriteLine("Exercise 6");
+
+            while (true)
+            {
+                Console.WriteLine("Enter your age:");
+
+                bool isUshort = ushort.TryParse(Console.ReadLine(), out ushort increase);
+
+                if (isUshort)
+                {
+                    if (increase >= 200)
+                        Console.WriteLine("You're a MONSTER!");
+                    else if (increase < 200 && increase > 180)
+                        Console.WriteLine("Not bad...");
+                    else
+                        Console.WriteLine("You're a dwarf.");
+                }
+                else
+                    Console.WriteLine("Invalid increase");
             }
         }
     }
