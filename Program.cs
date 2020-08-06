@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Week2Lesson7Exercises
 {
@@ -47,6 +48,21 @@ namespace Week2Lesson7Exercises
             Console.WriteLine(Environment.NewLine);
 
             #endregion
+
+            #region Exercise 7
+
+            Exercise7();
+            Console.WriteLine(Environment.NewLine);
+
+            #endregion
+
+            #region Exercise 8
+
+            //Exercise8();
+            Console.WriteLine(Environment.NewLine);
+
+            #endregion
+
         }
 
         private static void Exercise1()
@@ -155,6 +171,7 @@ namespace Week2Lesson7Exercises
                         Console.WriteLine("You can be a deputy.");
                     else
                         Console.WriteLine("You cannot apply for any position.");
+                    return;
                 }
                 else
                     Console.WriteLine("Invalid age");
@@ -167,7 +184,7 @@ namespace Week2Lesson7Exercises
 
             while (true)
             {
-                Console.WriteLine("Enter your age:");
+                Console.WriteLine("Enter your increase:");
 
                 bool isUshort = ushort.TryParse(Console.ReadLine(), out ushort increase);
 
@@ -179,9 +196,38 @@ namespace Week2Lesson7Exercises
                         Console.WriteLine("Not bad...");
                     else
                         Console.WriteLine("You're a dwarf.");
+                    return;
                 }
                 else
                     Console.WriteLine("Invalid increase");
+            }
+        }
+
+        private static void Exercise7()
+        {
+            Console.WriteLine("Exercise 7");
+
+            int[] maxValueArray = new int[3];
+
+            while (true)
+            {
+                maxValueArray[0] = AddNumber("first");
+                maxValueArray[1] = AddNumber("second");
+                maxValueArray[2] = AddNumber("third");
+                Console.WriteLine($"Max value for the given numbers is {maxValueArray.Max()}");
+                return;
+            };
+
+            static int AddNumber(string nextNumber)
+            {
+                Console.WriteLine($"Enter a {nextNumber} number:");
+
+                bool isInt = Int32.TryParse(Console.ReadLine(), out int number);
+
+                if (!isInt)
+                    AddNumber(nextNumber);
+
+                return number;
             }
         }
     }
